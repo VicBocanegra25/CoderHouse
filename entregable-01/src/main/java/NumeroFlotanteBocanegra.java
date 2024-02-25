@@ -4,6 +4,7 @@ public class NumeroFlotanteBocanegra {
 	public static void main(String[] args) {
 		/*
 		 * El propósito de este script es crear un método main que permita mostrar la parte entera de un número y separar la parte decimal de un tipo de dato float. 
+		 * Agregando git.
 		 */
         // Definimos la variable pi como un número de tipo float. 
         float pi = 3.1416F;
