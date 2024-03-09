@@ -33,7 +33,7 @@ public class Rectangulo {
 	// Un método to string para facilitar la impresión de atributos. 
 	@Override
 	public String toString() {
-		return "Rectangulo [longitud=" + longitud + ", ancho=" + ancho + "]";
+		return "Los atributos de la figura son: [longitud=" + longitud + ", ancho=" + ancho + "]";
 	}
 	
 }
