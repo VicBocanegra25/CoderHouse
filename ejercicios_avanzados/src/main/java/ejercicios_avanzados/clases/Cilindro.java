@@ -23,6 +23,14 @@ public class Cilindro extends Circulo{
 		super(radio);
 		this.altura = altura;
 	}
+
+	// Método para calcular el área, sobre-escrito
+	@Override
+	public double calcularArea() {
+		// El método calcula y devuelve el área lateral del cilindro (longitud circunferencia * altura)
+		return 2 * super.getPi() * super.getRadio() * getAltura();
+	}
+	
 	
 	
 	
