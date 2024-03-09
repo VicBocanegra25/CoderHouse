@@ -51,7 +51,7 @@ public class Estudiante extends Persona {
 	// Método para saludar
 	@Override
 	public void saludar() {
-		System.out.println("Hola, soy un estudiante.");
+		System.out.println("Hola, mi nombre es " + getNombre() + " y soy un estudiante.");
 	}
 	
 	

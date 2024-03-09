@@ -46,7 +46,7 @@ public class Persona {
 	
 	// Método para saludar
 	public void saludar() {
-		System.out.println("Hola, soy una persona.");
+		System.out.println("Hola, mi nombre es " + getNombre() + " y soy una persona.");
 	}
 	
 	
