@@ -24,6 +24,10 @@ public class Animal {
 		// TODO Auto-generated constructor stub
 	}
 	
+	// Método emitirSonido()
+	public void emitirSonido(String sonidoGenerico) {
+		System.out.println("El animal emite el sonido " + sonidoGenerico);
+	}
 	
 
 }

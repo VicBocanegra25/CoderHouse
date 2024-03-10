@@ -30,7 +30,10 @@ public class Perro extends Animal {
 		return "Perro [nombre=" + super.getNombre() + " raza=" + raza +  "]";
 	}
 
+	// Sobre-escribimos el método para emitir sonido.
+	public void emitirSonido() {
+		super.emitirSonido("El perro emite el ladrido: ¡Guau!");
+	}
 
-	
 	
 }
