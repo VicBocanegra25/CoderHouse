@@ -36,4 +36,8 @@ public class Rectangulo {
 		return "Los atributos de la figura son: [longitud=" + longitud + ", ancho=" + ancho + "]";
 	}
 	
+	// Método para calcular el perímetro (2*longitud + 2*ancho)
+	public double calcularPerimetro() {
+		return 2 * getAncho() + 2 * getLongitud();
+	}
 }

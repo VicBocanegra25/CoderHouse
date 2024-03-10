@@ -32,6 +32,12 @@ public class Cuadrado extends Rectangulo{
 		return super.toString();
 	}
 	
+	@Override
+	// Método para calcular el perímetro (2*longitud + 2*ancho)
+	public double calcularPerimetro() {
+		return 4 * getLongitud();
+	}
+	
 	
 	
 
