@@ -1,5 +1,7 @@
 package ejercicios_avanzados.clases;
 
+import java.util.Objects;
+
 // La clase persona corresponde al ejercicio 21.
 public class Persona {
 	// Definimos atributos de la clase
@@ -48,6 +50,28 @@ public class Persona {
 	public void saludar() {
 		System.out.println("Hola, mi nombre es " + getNombre() + " y soy una persona.");
 	}
+	
+	/* 
+	 * 	// El ejercicio 42 nos indica crear una clase persona con atributos nombre y edad, 
+	 * reutilizaremos esta clase e implementaremos el hashcCode() y equals()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(edad, nombre);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Persona other = (Persona) obj;
+		return edad == other.edad && Objects.equals(nombre, other.nombre);
+	}
+	
+	
 	
 	
 }
