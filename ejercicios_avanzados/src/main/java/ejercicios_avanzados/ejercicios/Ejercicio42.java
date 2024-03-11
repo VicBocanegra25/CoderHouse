@@ -13,7 +13,7 @@ public class Ejercicio42 {
 		// Instanciamos tres personas, dos con mismo nombre y edad, una distinta
 		Persona personaUno = new Persona();
 		Persona personaDos = new Persona();
-		Persona personaTres = new Persona();
+		Persona personaTres = new Persona(); 
 		
 		personaUno.setNombre("Bruce Wayne"); personaUno.setEdad(30);
 		personaDos.setNombre("Bruce Wayne"); personaDos.setEdad(30);
