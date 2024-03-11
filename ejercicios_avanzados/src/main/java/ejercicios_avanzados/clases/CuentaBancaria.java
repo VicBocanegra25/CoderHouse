@@ -1,4 +1,4 @@
-package ejercicios_avanzados.ejercicios;
+package ejercicios_avanzados.clases;
 
 import java.util.Objects;
 

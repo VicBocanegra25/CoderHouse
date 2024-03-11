@@ -1,6 +1,7 @@
 package ejercicios_avanzados.ejercicios;
 
 import ejercicios_avanzados.auxiliares.CompararObjetos;
+import ejercicios_avanzados.clases.CuentaBancaria;
 
 /* 
  * Define una clase CuentaBancaria con atributos numero y saldo. Implementa los métodos equals() 
