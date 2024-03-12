@@ -1,7 +1,6 @@
 package ejercicios_avanzados.ejercicios;
 
 import ejercicios_avanzados.clases.Producto;
-import ejercicios_avanzados.clases.producto;
 
 /* 
  * Crea una clase Producto con atributos nombre, precio y codigo. 
