@@ -29,7 +29,7 @@ public class Ejercicio35 {
 		if (divisor_ == 0) {
 			throw new ArithmeticException("No se puede dividir por cero");
 		}
-		return numerador_/divisor_;
+		return numerador_/ divisor_;
 	}
 
 }
