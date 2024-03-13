@@ -2,6 +2,8 @@ package ejercicios_avanzados.ejercicios;
 
 import java.util.Random;
 
+import ejercicios_avanzados.clases.ListaNumeros;
+
 /* 
  * Crea una clase ListaNumeros con un método buscarNumero() que tome una lista de números y un 
  * número objetivo como parámetros y devuelva la posición del número objetivo en la lista. Maneja la 
