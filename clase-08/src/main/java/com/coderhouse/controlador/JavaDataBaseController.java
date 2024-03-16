@@ -123,6 +123,38 @@ public class JavaDataBaseController {
 		}
 	}
 	
+	// UPDATE (Método para modificar un elemento existente de la db)
+	public void modificarAlumno(Integer dni, String nuevoNombre, String nuevoApellido) {
+		PreparedStatement statement = null;
+		try {
+
+			String query = "UPDATE alumnos SET nombre = ?, apellido = ? WHERE dni = ?";
+			statement = connection.prepareStatement(query);
+
+			statement.setString(1, nuevoNombre);
+			statement.setString(2, nuevoApellido);
+			statement.setInt(3, dni);
+
+			int rowsAffected = statement.executeUpdate();
+			if (rowsAffected == 0) {
+				throw new SQLException("No se pudo modificar el alumno con DNI: " + dni);
+			}
+			System.out.println("El Alumno con DNI " + dni + " fue modificado correctamente");
+
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("Error al cerrar el statement: " + e.getMessage());
+			}
+		}
+	}
+	
+	// DELETE (Método para eliminar un elemento existente - Se utiliza el dni para localizar al alumno)
 	public void eliminarAlumno(Integer dni) {
 		PreparedStatement statement = null;
 		try {

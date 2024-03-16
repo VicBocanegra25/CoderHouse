@@ -23,8 +23,14 @@ public class MainTest {
 //
 //			controller.insertarAlumno(alumno);
 //		}
+		controller.modificarAlumno(10000, "Ernesto" , "Sabato");
+		controller.mostrarAlumnos();
+		
+		// Se elimina el alumno con dni 10099
+		controller.eliminarAlumno(10099);
 		
 		controller.mostrarAlumnos();
+
 		controller.closeConnection();
 	}
 }
