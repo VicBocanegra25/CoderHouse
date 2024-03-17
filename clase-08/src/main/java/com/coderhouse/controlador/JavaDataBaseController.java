@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.coderhouse.entidades.Alumno;
+import com.coderhouse.entidades.Curso;
 
 // Esta clase simula el JDBC
 public class JavaDataBaseController {
@@ -50,7 +51,7 @@ public class JavaDataBaseController {
 		ResultSet resultSet = null;
 		
 		// Declaramos la query para obtener los alumnos de la db
-		String query = "SELECT dni, nombre, apellido, legajo FROM alumnos";
+		String query = "SELECT dni, nombre, apellido, legajo, id_curso FROM alumnos";
 		
 		try {
 			statement = connection.createStatement();
@@ -63,9 +64,10 @@ public class JavaDataBaseController {
 				String nombre = resultSet.getString("nombre");
 				String apellido = resultSet.getString("apellido");
 				String legajo = resultSet.getString("legajo");
-				
+				Integer id_curso = resultSet.getInt("id_curso");
+
 				System.out.println("Alumno con DNI Nro " + dni + " es " + nombre + " " + apellido
-						+ ", y su Legajo es el Nro: " + legajo);
+						+ " está cursando la clase con ID: " + id_curso +", y su Legajo es el Nro: " + legajo);
 				}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -92,14 +94,15 @@ public class JavaDataBaseController {
 		PreparedStatement statement = null;
 		
 		// Utilizamos los placeholders '?' para pasarles el valor por medio de números 
-		String query = "INSERT INTO alumnos (dni, apellido, legajo, nombre) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO alumnos (dni, apellido, id_curso, legajo, nombre)  VALUES (?, ?, ?, ?, ?)";
 
 		try {
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, alumno.getDni());
 			statement.setString(2, alumno.getApellido());
-			statement.setInt(3, alumno.hashCode());
-			statement.setString(4, alumno.getNombre());
+			statement.setInt(3, alumno.getIdCurso());
+			statement.setInt(4, alumno.hashCode());
+			statement.setString(5, alumno.getNombre());
 			int rowsAffected = statement.executeUpdate();
 			
 			// Este condicional nos sirve para indicarle al usuario que no se pudo realizar la inserción del alumno
@@ -181,4 +184,32 @@ public class JavaDataBaseController {
 
 	}
 	
+	// Método para insertar cursos en la tabla cursos
+		public void insertarCurso(Curso curso) {
+		PreparedStatement statement = null;
+		String query = "INSERT INTO cursos (titulo, descripcion) VALUES (?, ?)";
+
+		try {
+			statement = connection.prepareStatement(query);
+			statement.setString(1, curso.getTitulo());
+			statement.setString(2, curso.getDescripcion());
+			int rowsAffected = statement.executeUpdate();
+
+			if (rowsAffected == 0) {
+				throw new SQLException("No se pudo insertar el curso: " + curso.getTitulo());
+			}
+			System.out.println("El Curso " + curso.getTitulo() + " fue insertado correctamente");
+
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("Error al cerrar el statement: " + e.getMessage());
+			}
+		}
+	}
 }

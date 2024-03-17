@@ -5,6 +5,8 @@ import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 // La clase Alumno es una clase-entidad (es decir, una Tabla en la BD). 
@@ -26,6 +28,13 @@ public class Alumno {
 	private String apellido;
 	@Column(name="legajo")	
 	private Integer legajo;
+	
+	// Relacionando las tablas Alumno y Curso
+	@ManyToOne
+	@JoinColumn(name="id_curso")
+	private Curso curso;
+	@Column(name="id_curso", insertable = false, updatable = false)
+	private Integer idCurso;
 	
 	// Constructor vacío
 	public Alumno() {
@@ -82,6 +91,22 @@ public class Alumno {
 			return false;
 		Alumno other = (Alumno) obj;
 		return Objects.equals(legajo, other.legajo);
+	}
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+
+	public Integer getIdCurso() {
+		return idCurso;
+	}
+
+	public void setIdCurso(Integer idCurso) {
+		this.idCurso = idCurso;
 	} 
 	
 	
