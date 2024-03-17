@@ -23,8 +23,8 @@ public class MainTest {
 		Curso cursoDos = new Curso();
 		cursoUno.setTitulo("Introducción a Java");
 		cursoUno.setDescripcion("Curso de Introducción a Java, Spring y Hibernate.");
-		cursoUno.setTitulo("Spring Boot");
-		cursoUno.setDescripcion("Curso de Introducción al Framework Spring Boot.");
+		cursoDos.setTitulo("Spring Boot");
+		cursoDos.setDescripcion("Curso de Introducción al Framework Spring Boot.");
 		
 		controller.insertarCurso(cursoUno);
 		controller.insertarCurso(cursoDos);
