@@ -54,6 +54,19 @@ public class MainTest {
 		System.out.println("***MOSTRANDO ALUMNO ***");
 		controller.mostrarAlumnoConDNI(10001);
 		
+		// Ahora hacemos operaciones con los cursos:
+		System.out.println("\n***MOSTRANDO CURSOS***");
+		Curso cursoTres = new Curso();
+		cursoTres.setTitulo("Bases de Datos");
+		cursoTres.setDescripcion("Introducción a las bases de datos relacionales SQL");
+		controller.insertarCurso(cursoTres);
+		controller.mostrarCursos();
+		controller.modificarCurso(1, "Curso de Introducción a Python", "Introducción a la programación con Python.");
+		controller.mostrarCursoConId(1);
+		controller.eliminarCurso(3);
+		controller.mostrarCursos(); 
+		
+		controller.limpiarBD();
 		controller.closeConnection();
 	}
 }

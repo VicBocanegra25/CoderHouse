@@ -234,7 +234,10 @@ public class JavaDataBaseController {
 
 	}
 	
-	// Método para insertar cursos en la tabla cursos
+	/* 
+	 * En esta parte del JDBC, implementamos el CRUD para la tabla cursos
+	 */
+	// CREATE - Método para insertar cursos en la tabla cursos
 		public void insertarCurso(Curso curso) {
 		PreparedStatement statement = null;
 		String query = "INSERT INTO cursos (titulo, descripcion) VALUES (?, ?)";
@@ -262,4 +265,169 @@ public class JavaDataBaseController {
 			}
 		}
 	}
+	// READ (Devuelve todos los cursos)
+	public void mostrarCursos() {
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		// Declaramos la query para obtener los alumnos de la db
+		String query = "SELECT id_curso, descripcion, titulo FROM cursos";
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(query);
+			
+			// Iteramos sobre el resultSet (es un iterator, utilizamos el método .next().
+			while (resultSet.next()) {
+				// Salvamos la información en variables locales
+				Integer idCurso = resultSet.getInt("id_curso");
+				String descripcion = resultSet.getString("descripcion");
+				String titulo = resultSet.getString("titulo");
+
+				System.out.println("El curso con el ID Nro " + idCurso + " es " + titulo + "-" +
+				descripcion);
+				}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try { 
+				// Se cierran las queries
+				if (resultSet != null) {
+					resultSet.close();
+				} 
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("Error al cerrar el statement o el resultSet " + e.getMessage());
+			}
+		}
+	}
+	
+	// READ (by ID) - Este método muestra un alumno en específico, a partir del dni
+	public void mostrarCursoConId(Integer idCurso_) {
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+
+		// Declaramos la query para obtener los alumnos de la db
+		String query = "SELECT id_curso, descripcion, titulo FROM cursos WHERE id_curso = ?";
+		
+		try {
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, idCurso_);
+			resultSet =  statement.executeQuery();
+			if (resultSet.next() == false) {
+				throw new SQLException("No se pudo recuperar el curso con ID: " + idCurso_);
+			}
+
+		// Modificamos el while por un do-while ya que el iterador se recorrió durante el chequeo: resultSet.next() == false
+		do {
+			// Salvamos la información en variables locales
+			Integer idCurso = resultSet.getInt("id_curso");
+			String descripcion = resultSet.getString("descripcion");
+			String titulo = resultSet.getString("titulo");
+
+			System.out.println("El curso con ID Nro " + idCurso + " es " + titulo + "-" + descripcion + ".");
+			} while (resultSet.next());
+		
+		} catch (SQLException e) {
+			System.out.println("Error al obtener al curso con ID: " + idCurso_);
+			System.out.println(e.getMessage());
+		} finally {
+			try { 
+				// Se cierran las queries
+				if (resultSet != null) {
+					resultSet.close();
+				} 
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("Error al cerrar el statement o el resultSet " + e.getMessage());
+				}	
+		}
+	}
+	
+	// UPDATE (Método para modificar un elemento (CURSO) existente de la db)
+	public void modificarCurso(Integer idCurso, String nuevoTitulo, String nuevaDescripcion) {
+		PreparedStatement statement = null;
+		try {
+
+			String query = "UPDATE cursos SET titulo = ?, descripcion = ? WHERE id_curso = ?";
+			statement = connection.prepareStatement(query);
+
+			statement.setString(1, nuevoTitulo);
+			statement.setString(2, nuevaDescripcion);
+			statement.setInt(3, idCurso);
+
+			int rowsAffected = statement.executeUpdate();
+			if (rowsAffected == 0) {
+				throw new SQLException("No se pudo modificar el curso con ID: " + idCurso);
+			}
+			System.out.println("El curso con ID " + idCurso + " fue modificado correctamente");
+
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("Error al cerrar el statement: " + e.getMessage());
+			}
+		}
+	}
+	
+	// DELETE (Método para eliminar un elemento (CURSO) existente - Se utiliza el id_curso para localizar al curso)
+	public void eliminarCurso(Integer idCurso) {
+		PreparedStatement statement = null;
+		try {
+			String query = "DELETE FROM cursos WHERE id_curso = ?";
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, idCurso);
+
+			int rowsAffected = statement.executeUpdate();
+			if (rowsAffected == 0) {
+				throw new SQLException("No se pudo eliminar el curso con ID: " + idCurso);
+			}
+			System.out.println("El curso con ID: " + idCurso + " fue eliminado correctamente");
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("Error al cerrar el statement: " + e.getMessage());
+			}
+		}
+
+	}
+	
+	// Método auxiliar para limpiar la bd. Se utiliza DROP para eliminar las tablas, pero se comienza con Alumno (por las primary key constraints)
+	public void limpiarBD() {
+		Statement statement = null;
+		try {
+	        statement = connection.createStatement();
+	        statement.executeUpdate("DROP TABLE IF EXISTS alumnos");
+	        statement.executeUpdate("DROP TABLE IF EXISTS cursos");
+
+			System.out.println("La base de datos fue limpiada correctamente.");
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("Error al cerrar el statement: " + e.getMessage());
+			}
+		}
+
+	}
+		
+		
 }
