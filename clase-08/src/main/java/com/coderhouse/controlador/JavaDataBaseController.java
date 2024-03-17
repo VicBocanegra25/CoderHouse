@@ -46,6 +46,49 @@ public class JavaDataBaseController {
 	}
 	
 	// Comienzan los métodos CRUD
+
+	
+	// CREATE (Método para insertar un nuevo alumno a la db). 
+	
+	public void insertarAlumno(Alumno alumno) {
+		
+		// Puesto que se realiza una inserción a la BD, utilizamos el objeto PreparedStatement
+		PreparedStatement statement = null;
+		
+		// Utilizamos los placeholders '?' para pasarles el valor por medio de números 
+		String query = "INSERT INTO alumnos (dni, apellido, id_curso, legajo, nombre)  VALUES (?, ?, ?, ?, ?)";
+
+		try {
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, alumno.getDni());
+			statement.setString(2, alumno.getApellido());
+			statement.setInt(3, alumno.getIdCurso());
+			statement.setInt(4, alumno.hashCode());
+			statement.setString(5, alumno.getNombre());
+			int rowsAffected = statement.executeUpdate();
+			
+			// Este condicional nos sirve para indicarle al usuario que no se pudo realizar la inserción del alumno
+			if (rowsAffected == 0) {
+				throw new SQLException(
+						"No se pudo insertar el alumno: " + alumno.getNombre() + " " + alumno.getApellido());
+			}
+			System.out.println(
+					"El Alumno " + alumno.getNombre() + " " + alumno.getApellido() + " fue insertado correctamente");
+
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("Error al cerrar el statement: " + e.getMessage());
+			}
+		}
+	}
+	
+	// READ (Devuelve todos los alumnos)
 	public void mostrarAlumnos() {
 		Statement statement = null;
 		ResultSet resultSet = null;
@@ -86,43 +129,50 @@ public class JavaDataBaseController {
 		}
 	}
 	
-	// CREATE (Método para insertar un nuevo alumno a la db). 
-	
-	public void insertarAlumno(Alumno alumno) {
-		
-		// Puesto que se realiza una inserción a la BD, utilizamos el objeto PreparedStatement
+	// READ (by ID) - Este método muestra un alumno en específico, a partir del dni
+	public void mostrarAlumnoConDNI(Integer dni_) {
 		PreparedStatement statement = null;
-		
-		// Utilizamos los placeholders '?' para pasarles el valor por medio de números 
-		String query = "INSERT INTO alumnos (dni, apellido, id_curso, legajo, nombre)  VALUES (?, ?, ?, ?, ?)";
+		ResultSet resultSet = null;
 
+		// Declaramos la query para obtener los alumnos de la db
+		String query = "SELECT dni, nombre, apellido, legajo, id_curso FROM alumnos WHERE dni = ?";
+		
 		try {
 			statement = connection.prepareStatement(query);
-			statement.setInt(1, alumno.getDni());
-			statement.setString(2, alumno.getApellido());
-			statement.setInt(3, alumno.getIdCurso());
-			statement.setInt(4, alumno.hashCode());
-			statement.setString(5, alumno.getNombre());
-			int rowsAffected = statement.executeUpdate();
-			
-			// Este condicional nos sirve para indicarle al usuario que no se pudo realizar la inserción del alumno
-			if (rowsAffected == 0) {
-				throw new SQLException(
-						"No se pudo insertar el alumno: " + alumno.getNombre() + " " + alumno.getApellido());
+			statement.setInt(1, dni_);
+			resultSet =  statement.executeQuery();
+			if (resultSet.next() == false) {
+				throw new SQLException("No se pudo recuperar el alumno con DNI: " + dni_);
 			}
-			System.out.println(
-					"El Alumno " + alumno.getNombre() + " " + alumno.getApellido() + " fue insertado correctamente");
 
+		// Modificamos el while por un do-while ya que el iterador se recorrió durante el chequeo: resultSet.next() == false
+		do {
+			// Salvamos la información en variables locales
+			Integer dni = resultSet.getInt("dni");
+			String nombre = resultSet.getString("nombre");
+			String apellido = resultSet.getString("apellido");
+			String legajo = resultSet.getString("legajo");
+			Integer id_curso = resultSet.getInt("id_curso");
+
+			System.out.println("Alumno con DNI Nro " + dni + " es " + nombre + " " + apellido
+					+ ". Está cursando la clase con ID: " + id_curso +", y su Legajo es el Nro: " + legajo);
+			} while (resultSet.next());
+		
 		} catch (SQLException e) {
-			System.err.println(e.getMessage());
+			System.out.println("Error al obtener al alumno con dni " + dni_);
+			System.out.println(e.getMessage());
 		} finally {
-			try {
+			try { 
+				// Se cierran las queries
+				if (resultSet != null) {
+					resultSet.close();
+				} 
 				if (statement != null) {
 					statement.close();
 				}
 			} catch (SQLException e) {
-				System.err.println("Error al cerrar el statement: " + e.getMessage());
-			}
+				System.out.println("Error al cerrar el statement o el resultSet " + e.getMessage());
+				}	
 		}
 	}
 	

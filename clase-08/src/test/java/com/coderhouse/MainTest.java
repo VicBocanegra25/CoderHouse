@@ -50,7 +50,10 @@ public class MainTest {
 		
 		controller.mostrarAlumnos();
 
-
+		// Mostremos al alumno con dni: 10001
+		System.out.println("***MOSTRANDO ALUMNO ***");
+		controller.mostrarAlumnoConDNI(10001);
+		
 		controller.closeConnection();
 	}
 }
