@@ -25,7 +25,7 @@ public class Cliente {
 	@Column(name = "cliente_id")
 	private Integer clienteID;
 	@Column(name = "telefono")
-	private Integer telefono;
+	private long telefono;
 	@Column(name = "nombre")
 	private String nombre;
 	@Column(name = "apellido")
@@ -54,11 +54,11 @@ public class Cliente {
 		this.clienteID = clienteID;
 	}
 
-	public Integer getTelefono() {
+	public Long getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(Integer telefono) {
+	public void setTelefono(long telefono) {
 		this.telefono = telefono;
 	}
 
