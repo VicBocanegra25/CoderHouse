@@ -37,6 +37,7 @@ public class InicializadorDatos implements CommandLineRunner {
 		clienteUno.setApellido("Bocanegra");
 		clienteUno.setCorreoElectronico("victor.bocanegra.e@gmail.com");
 		clienteUno.setTelefono(5564748037l);
+		clienteUno.setDireccion("Ciudad de México, México");
 		clienteRepo.save(clienteUno);
 		
 		// Agregamos un producto
