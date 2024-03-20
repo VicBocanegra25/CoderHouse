@@ -65,7 +65,8 @@ public class InicializadorDatos implements CommandLineRunner {
 
 		compraUno.setTotal(BigDecimal.valueOf(detalleCompraUno.getCantidad() * detalleCompraUno.getPrecio().intValue()));
 		compraRepo.save(compraUno);
-	
+		// Test commit
+		
 	
 	}
 	
