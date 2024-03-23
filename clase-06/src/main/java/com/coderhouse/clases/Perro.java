@@ -22,8 +22,8 @@ public class Perro extends Animal implements SerVivo {
 	}
 	
 	
-	public Perro(String nombre, String raza, Integer edad, boolean vive) {
-		super();
+	public Perro(String clase, String nombre, String raza, Integer edad, boolean vive) {
+		super(clase);
 		this.nombre = nombre;
 		this.raza = raza;
 		this.edad = edad;
@@ -64,25 +64,25 @@ public class Perro extends Animal implements SerVivo {
 
 	@Override
 	public void comer() {
-		// TODO Auto-generated method stub
+		System.out.println(getNombre() + " esta comiendo comida balanceada.");
 		
 	}
 
 	@Override
 	public void respirar() {
-		// TODO Auto-generated method stub
+		System.out.println(getNombre() + " esta respirando por el hocico.");
 		
 	}
 
 	@Override
 	public void moverse() {
-		// TODO Auto-generated method stub
+		System.out.println(this.nombre + " esta corriendo.");
 		
 	}
 
 	@Override
 	public void comunicarse() {
-		// TODO Auto-generated method stub
+		System.out.println(this.nombre + " esta ladrando.");
 		
 	}
 
@@ -90,6 +90,16 @@ public class Perro extends Animal implements SerVivo {
 	public boolean estaVivo() {
 		// TODO Auto-generated method stub
 		return isVive();
+	}
+	
+	// Polimorfismo (implementa el método imprimirMensaje y lo sobre-escribe. 
+	@Override
+	public void imprimirMensaje() {
+		if (isVive()) {
+			System.out.println(this.nombre + " esta con vida.!");
+		} else {
+			System.out.println(this.nombre + " esta muerto lamentablemente.!");
+		}
 	}
 
 }
