@@ -294,8 +294,8 @@ public class Clase09Application implements CommandLineRunner{
 		if (listaCursos.isEmpty()) {
 			System.out.println("No hay cursos para mostrar. ");
 		} else {
+			System.out.println("Lista de cursos: ");
 			for (Curso curso : listaCursos) {
-				System.out.println("Lista de cursos: ");
 				System.out.println(curso.getId_curso() + " - " + curso.getTitulo() + " - " + curso.getDescripcion());				
 			}
 		}
