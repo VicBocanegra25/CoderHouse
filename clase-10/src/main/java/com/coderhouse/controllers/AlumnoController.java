@@ -85,6 +85,7 @@ public class AlumnoController {
 				// Actualizamos
 				alumno.setNombre(alumnoActualizado.getNombre());
 				alumno.setApellido(alumnoActualizado.getApellido());
+				alumnoRepository.save(alumno);
 				return new ResponseEntity<> (alumno, HttpStatus.OK);				
 			} else {
 				return new ResponseEntity<> (alumno, HttpStatus.NOT_FOUND);
