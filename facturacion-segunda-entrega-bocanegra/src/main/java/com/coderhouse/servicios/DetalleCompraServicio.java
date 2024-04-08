@@ -34,7 +34,7 @@ public class DetalleCompraServicio {
 	public DetalleDeCompra editarDetalleDeCompraPorID(Integer detalleDeCompraId, DetalleDeCompra detalleDeCompraModificado) {
 		try {
 			if (detalleDeCompraRepository.existsById(detalleDeCompraId)) {
-				detalleDeCompraModificado.setDetalleDeCompraID(detalleDeCompraId);
+				detalleDeCompraModificado.setDetallesID(detalleDeCompraId);
 				return detalleDeCompraRepository.save(detalleDeCompraModificado);
 			}
 		} catch (EmptyResultDataAccessException e) {

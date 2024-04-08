@@ -24,7 +24,7 @@ public class ClienteServicio {
 		return clienteRepository.findAll();
 	}
 	
-	public Cliente listarClientePorID(Integer clienteId) {
+	public Cliente listarClientePorId(Integer clienteId) {
 		return clienteRepository.findById(clienteId).orElseThrow(() -> new EntityNotFoundException("No se encontró un cliente con id " + clienteId));
 	}
 	
