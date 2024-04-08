@@ -28,7 +28,11 @@ public class Producto {
 	private BigDecimal precio;
 	@Column(name = "marca")
 	private String marca;
+	// Se agrega este atributo para contabilizar la existencia del producto en inventario
+	@Column(name = "existencia")
+	private Integer existencia;
 	
+
 	// Relacionamos los productos con los detalles de compra
 	@OneToMany(mappedBy = "producto")
 	private List<DetalleDeCompra> detalleCompra;
@@ -76,6 +80,13 @@ public class Producto {
 
 	public void setMarca(String marca) {
 		this.marca = marca;
+	}
+	
+	public Integer getExistencia() {
+		return existencia;
+	}
+	public void setExistencia(Integer existencia) {
+		this.existencia = existencia;
 	}
 	
 	// El ID del producto lo hace distinto de otros productos
