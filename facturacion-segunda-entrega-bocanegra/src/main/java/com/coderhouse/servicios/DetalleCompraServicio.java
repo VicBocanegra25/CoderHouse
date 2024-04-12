@@ -7,7 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.coderhouse.modelos.DetalleDeCompra;
-import com.coderhouser.repositorios.DetalleDeCompraRepositorio;
+import com.coderhouse.repositorios.DetalleDeCompraRepositorio;
 
 import jakarta.persistence.EntityNotFoundException;
 

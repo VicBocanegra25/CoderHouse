@@ -3,6 +3,8 @@ package com.coderhouse.modelos;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,7 @@ public class DetalleDeCompra {
 	@JoinColumn(name = "producto_id")
 	private Producto producto;
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "compra_id")
 	private Compra compra;
 	@Column(name = "precio")

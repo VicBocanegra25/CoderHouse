@@ -2,6 +2,8 @@ package com.coderhouse.modelos;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,6 +40,7 @@ public class Cliente {
 	
 	// Relacionamos con la tabla de Compras (OneToMany, un cliente puede hacer muchas compras)
 	@OneToMany(mappedBy = "cliente")
+	@JsonManagedReference // Esta anotación previene el problema de la recursividad al realizar la serialización en las solicitudes
 	private List<Compra> compras;
 	
 	// Hacemos un constructor vacío 
@@ -110,6 +113,14 @@ public class Cliente {
 			return false;
 		Cliente other = (Cliente) obj;
 		return Objects.equals(clienteID, other.clienteID);
+	}
+
+	public List<Compra> getCompras() {
+		return compras;
+	}
+
+	public void setCompras(List<Compra> compras) {
+		this.compras = compras;
 	}
 	
 	

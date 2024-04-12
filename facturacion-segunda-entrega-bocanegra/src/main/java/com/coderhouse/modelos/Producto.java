@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +37,7 @@ public class Producto {
 
 	// Relacionamos los productos con los detalles de compra
 	@OneToMany(mappedBy = "producto")
+	@JsonManagedReference
 	private List<DetalleDeCompra> detalleCompra;
 		
 	// Constructor manual vacío
@@ -104,6 +107,12 @@ public class Producto {
 			return false;
 		Producto other = (Producto) obj;
 		return Objects.equals(productoID, other.productoID);
+	}
+	public List<DetalleDeCompra> getDetalleCompra() {
+		return detalleCompra;
+	}
+	public void setDetalleCompra(List<DetalleDeCompra> detalleCompra) {
+		this.detalleCompra = detalleCompra;
 	}
 	
 	

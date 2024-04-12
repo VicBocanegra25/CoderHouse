@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,10 +34,12 @@ public class Compra {
 	// Relacionamos la tabla Compras con la tabla Clientes. El tipo de relación es ManyToOne (Un cliente realiza muchas compras)
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
+	@JsonBackReference // La anotación previene que este elemento sea serializado, evitando el problema de recursividad
 	private Cliente cliente;
 	
 	// Relacionamos los detalles de compra
 	@OneToMany(mappedBy = "compra")
+	@JsonManagedReference
 	private List <DetalleDeCompra> detallesCompra;
 	
 	
@@ -91,6 +96,14 @@ public class Compra {
 			return false;
 		Compra other = (Compra) obj;
 		return Objects.equals(compraID, other.compraID);
+	}
+
+	public List<DetalleDeCompra> getDetallesCompra() {
+		return detallesCompra;
+	}
+
+	public void setDetallesCompra(List<DetalleDeCompra> detallesCompra) {
+		this.detallesCompra = detallesCompra;
 	}
 	
 	

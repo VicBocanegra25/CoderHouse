@@ -7,7 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.coderhouse.modelos.Producto;
-import com.coderhouser.repositorios.ProductoRepositorio;
+import com.coderhouse.repositorios.ProductoRepositorio;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -23,7 +23,7 @@ public class ProductoServicio {
 		return productoRepository.findAll();
 	}
 	
-	public Producto listarProductoPorID(Integer productoId) {
+	public Producto listarProductoPorId(Integer productoId) {
 		return productoRepository.findById(productoId).orElseThrow(() -> new EntityNotFoundException("No se encontró un producto con id " + productoId));
 	}
 	
@@ -31,7 +31,7 @@ public class ProductoServicio {
 		return productoRepository.save(productoNuevo);
 	}
 	
-	public Producto editarProductoPorID(Integer productoId, Producto productoModificado) {
+	public Producto editarProductoPorId(Integer productoId, Producto productoModificado) {
 		try {
 			if (productoRepository.existsById(productoId)) {
 				productoModificado.setProductoID(productoId);

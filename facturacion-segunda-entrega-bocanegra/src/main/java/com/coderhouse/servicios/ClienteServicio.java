@@ -8,7 +8,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.coderhouse.modelos.Cliente;
-import com.coderhouser.repositorios.ClienteRepositorio;
+import com.coderhouse.repositorios.ClienteRepositorio;
 
 import jakarta.persistence.EntityNotFoundException;
 
