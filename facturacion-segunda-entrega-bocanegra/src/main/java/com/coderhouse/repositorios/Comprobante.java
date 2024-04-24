@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.coderhouse.modelos.DetalleDeCompra;
 
 @Repository
-public interface DetalleDeCompraRepositorio extends JpaRepository<DetalleDeCompra, Integer> {
+public interface ComprobanteRepositorio extends JpaRepository<Comprobante, Integer> {
 
 }

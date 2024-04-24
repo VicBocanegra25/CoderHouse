@@ -16,15 +16,16 @@ import jakarta.persistence.Table;
 
 // Esta clase / entidad nos permite ligar las compras, productos y clientes 
 @Entity
-@Table(name="detalles_compra")
-public class DetalleDeCompra {
+@Table(name="comprobantes")
+public class Comprobante {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "detalle_id")
-	private Integer detallesID;
+	@Column(name = "comprobante_id")
+	private Integer comprobanteID;
 	@Column(name = "cantidad")
 	private Integer cantidad;
+
 	@ManyToOne
 	@JoinColumn(name = "producto_id")
 	private Producto producto;
@@ -32,22 +33,22 @@ public class DetalleDeCompra {
 	@JsonBackReference
 	@JoinColumn(name = "compra_id")
 	private Compra compra;
+
 	@Column(name = "precio")
 	private BigDecimal precio;
-	
 
-	public DetalleDeCompra() {
+	public Comprobante() {
 		
 	}
 
 
-	public Integer getDetallesID() {
-		return detallesID;
+	public Integer getComprobanteID() {
+		return comprobanteID;
 	}
 
 
-	public void setDetallesID(Integer detallesID) {
-		this.detallesID = detallesID;
+	public void setComprobanteID(Integer comprobanteID) {
+		this.comprobanteID = comprobanteID;
 	}
 
 
@@ -93,7 +94,7 @@ public class DetalleDeCompra {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(detallesID);
+		return Objects.hash(comprobanteID);
 	}
 
 
@@ -105,8 +106,8 @@ public class DetalleDeCompra {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DetalleDeCompra other = (DetalleDeCompra) obj;
-		return Objects.equals(detallesID, other.detallesID);
+		comprobante other = (comprobante) obj;
+		return Objects.equals(comprobanteID, other.comprobanteID);
 	}
 	
 	

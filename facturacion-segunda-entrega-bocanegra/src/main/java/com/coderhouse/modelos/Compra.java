@@ -8,15 +8,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 // La clase / entidad Comrpa nos ayudará a crear una tabla para almacenar las compras realizadas por nuestros usuarios. 
 @Entity
@@ -30,7 +22,9 @@ public class Compra {
 	private LocalDate fechaCompra;
 	@Column(name = "total")
 	private BigDecimal total;
-	
+	@Column(name = "total_productos")
+	private Integer totalProductos;
+
 	// Relacionamos la tabla Compras con la tabla Clientes. El tipo de relación es ManyToOne (Un cliente realiza muchas compras)
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
@@ -38,9 +32,9 @@ public class Compra {
 	private Cliente cliente;
 	
 	// Relacionamos los detalles de compra
-	@OneToMany(mappedBy = "compra")
+	@OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference
-	private List <DetalleDeCompra> detallesCompra;
+	private List <Comprobante> comprobantes;
 	
 	
 	// Constructor
@@ -98,13 +92,19 @@ public class Compra {
 		return Objects.equals(compraID, other.compraID);
 	}
 
-	public List<DetalleDeCompra> getDetallesCompra() {
-		return detallesCompra;
+	public List<Comprobante> getComprobantes() {
+		return comprobantes;
 	}
 
-	public void setDetallesCompra(List<DetalleDeCompra> detallesCompra) {
-		this.detallesCompra = detallesCompra;
+	public void setComprobantes(List<Comprobante> comprobantes) {
+		this.comprobantes = comprobantes;
 	}
-	
-	
+
+	public Integer getTotalProductos() {
+		return totalProductos;
+	}
+
+	public void setTotalProductos(Integer totalProductos) {
+		this.totalProductos = totalProductos;
+	}
 }
