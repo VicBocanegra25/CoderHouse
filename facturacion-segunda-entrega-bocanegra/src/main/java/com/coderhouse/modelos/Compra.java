@@ -92,6 +92,7 @@ public class Compra {
 		return Objects.equals(compraID, other.compraID);
 	}
 
+	// Getters y setters de los elementos foráneos
 	public List<Comprobante> getComprobantes() {
 		return comprobantes;
 	}
