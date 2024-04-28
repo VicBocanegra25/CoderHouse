@@ -38,7 +38,7 @@ public class Producto {
 	// Relacionamos los productos con los detalles de compra
 	@OneToMany(mappedBy = "producto")
 	@JsonManagedReference
-	private List<DetalleDeCompra> detalleCompra;
+	private List<Comprobante> comprobante;
 		
 	// Constructor manual vacío
 	public Producto() {
@@ -108,14 +108,13 @@ public class Producto {
 		Producto other = (Producto) obj;
 		return Objects.equals(productoID, other.productoID);
 	}
-	public List<DetalleDeCompra> getDetalleCompra() {
-		return detalleCompra;
+
+	// Getters y setters de los elementos foráneos
+	public List<Comprobante> getComprobante() {
+		return comprobante;
 	}
-	public void setDetalleCompra(List<DetalleDeCompra> detalleCompra) {
-		this.detalleCompra = detalleCompra;
+
+	public void setComprobante(List<Comprobante> comprobante) {
+		this.comprobante = comprobante;
 	}
-	
-	
-	
-	
 }
