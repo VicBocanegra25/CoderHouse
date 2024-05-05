@@ -25,17 +25,15 @@ public class Compra {
 	@Column(name = "total_productos")
 	private Integer totalProductos;
 
-	// Relacionamos la tabla Compras con la tabla Clientes. El tipo de relación es ManyToOne (Un cliente realiza muchas compras)
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
-	@JsonBackReference // La anotación previene que este elemento sea serializado, evitando el problema de recursividad
+	@JsonBackReference
 	private Cliente cliente;
-	
-	// Relacionamos los detalles de compra
+
 	@OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonManagedReference
-	private List <Comprobante> comprobantes;
-	
+	@JsonManagedReference("compra-comprobante")
+	private List<Comprobante> comprobantes;
+
 	
 	// Constructor
 	public Compra() {

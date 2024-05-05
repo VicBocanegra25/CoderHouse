@@ -5,20 +5,12 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 // Esta clase / entidad nos permite ligar las compras, productos y clientes 
 @Entity
 @Table(name="comprobantes")
 public class Comprobante {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "comprobante_id")
@@ -26,12 +18,14 @@ public class Comprobante {
 	@Column(name = "cantidad")
 	private Integer cantidad;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "producto_id")
+	@JsonBackReference("producto-comprobante")  // Named to match with Product's managed reference
 	private Producto producto;
-	@ManyToOne
-	@JsonBackReference
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "compra_id")
+	@JsonBackReference("compra-comprobante")  // Named to match with Compra's managed reference
 	private Compra compra;
 
 	@Column(name = "precio")
@@ -94,7 +88,7 @@ public class Comprobante {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(comprobanteID);
+		return Objects.hash(cantidad, compra, comprobanteID, precio, producto);
 	}
 
 
@@ -106,10 +100,13 @@ public class Comprobante {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		comprobante other = (comprobante) obj;
-		return Objects.equals(comprobanteID, other.comprobanteID);
+		Comprobante other = (Comprobante) obj;
+		return Objects.equals(cantidad, other.cantidad) && Objects.equals(compra, other.compra)
+				&& Objects.equals(comprobanteID, other.comprobanteID) && Objects.equals(precio, other.precio)
+				&& Objects.equals(producto, other.producto);
 	}
-	
-	
+
+
+
 	
 }

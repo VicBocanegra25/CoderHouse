@@ -6,13 +6,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 // La clase/entidad Producto nos servirá para guardar información sobre los productos de la tienda en línea. 
 @Entity
@@ -20,7 +14,7 @@ import jakarta.persistence.Table;
 public class Producto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "producto_id") 
+	@Column(name = "producto_id")
 	private Integer productoID;
 	@Column(name = "nombre_producto")
 	private String nombreProducto;
@@ -30,16 +24,13 @@ public class Producto {
 	private BigDecimal precio;
 	@Column(name = "marca")
 	private String marca;
-	// Se agrega este atributo para contabilizar la existencia del producto en inventario
 	@Column(name = "existencia")
 	private Integer existencia;
-	
 
-	// Relacionamos los productos con los detalles de compra
-	@OneToMany(mappedBy = "producto")
-	@JsonManagedReference
+	@OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
+	@JsonManagedReference("producto-comprobante")
 	private List<Comprobante> comprobante;
-		
+
 	// Constructor manual vacío
 	public Producto() {
 		

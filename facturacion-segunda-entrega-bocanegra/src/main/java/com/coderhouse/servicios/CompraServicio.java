@@ -56,7 +56,8 @@ public class CompraServicio {
 			Producto producto = productoRepositorio.findById(comprobante.getProducto().getProductoID())
 					.orElseThrow(() -> new IllegalArgumentException("Producto no encontrado."));
 			if (producto.getExistencia() < comprobante.getCantidad()) {
-				throw new IllegalArgumentException("Este producto no está disponible en el Stock.");
+				throw new IllegalArgumentException("Este producto 'Id: " + producto.getProductoID() + "-" +
+						producto.getNombreProducto()  + "no está disponible en el Stock.");
 			}
 
 			// Si existen productos en el inventario, la compra se realiza y se actualiza la existencia
