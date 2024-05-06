@@ -2,6 +2,13 @@ package com.coderhouse.controladores;
 
 import java.util.List;
 
+import com.coderhouse.modelos.Producto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,11 +28,21 @@ import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/compras")
+@Tag(name = "Gestión de Compras", description = "Endpoints para gestionar las compras del comercio")
 public class CompraControlador {
  	@Autowired
     private CompraServicio compraServicio;
 
-
+    @Operation(summary = "Listar todas las compras", description = "Devuelve una lista con todas las compras registradas en el sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de compras obtenida correctamente",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Compra.class))
+                    }),
+            @ApiResponse(responseCode = "500", description = "Error al recuperar la información sobre las compras",
+                    content = {
+                            @Content})
+    })
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Compra>> listarCompras() {
         try {
@@ -36,6 +53,19 @@ public class CompraControlador {
         }
     }
 
+    @Operation(summary = "Lista una compra", description = "Devuelve un objeto del tipo compra con base en el ID contenido en el sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Compra obtenida correctamente",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Compra.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "No se encontró la compra con ese ID",
+                    content = {
+                            @Content}),
+            @ApiResponse(responseCode = "500", description = "Error al recuperar la información sobre la compra",
+                    content = {
+                            @Content})
+    })
     @GetMapping(value = "/{compraId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> listarCompraPorId(@PathVariable Integer compraId) {
         try {
@@ -47,7 +77,20 @@ public class CompraControlador {
             return new ResponseEntity<>(mensaje, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
+    @Operation(summary = "Agregar una compra", description = "Agrega una nueva compra al sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Compra agregada correctamente",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Compra.class))
+                    }),
+            @ApiResponse(responseCode = "400", description = "Error al agregar la compra",
+                    content = {
+                            @Content}),
+            @ApiResponse(responseCode = "500", description = "Error al agregar la compra",
+                    content = {
+                            @Content})
+    })
     @PostMapping(value = "/agregar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> agregarCompra(@RequestBody Compra compra) {
     	try {
@@ -60,6 +103,19 @@ public class CompraControlador {
     	}
     }
 
+    @Operation(summary = "Eliminar una compra", description = "Elimina una compra del sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Compra eliminada correctamente",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Compra.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "No se encontró la compra con ese ID",
+                    content = {
+                            @Content}),
+            @ApiResponse(responseCode = "500", description = "Error al eliminar la compra",
+                    content = {
+                            @Content})
+    })
     @DeleteMapping(value = "/{compraId}/eliminar", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> eliminarCompra(@PathVariable Integer compraId) {
         try {

@@ -5,29 +5,35 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
-// Esta clase / entidad nos permite ligar las compras, productos y clientes 
+// Esta clase / entidad nos permite ligar las compras, productos y clientes
+@Schema(description = "Esta entidad representa un comprobante de compra en la plataforma de comercio")
 @Entity
 @Table(name="comprobantes")
 public class Comprobante {
+	// Atributos de la clase
+	@Schema(description = "El ID del comprobante", requiredMode = Schema.RequiredMode.AUTO)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "comprobante_id")
 	private Integer comprobanteID;
+	@Schema(description = "La cantidad de productos comprados", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
 	@Column(name = "cantidad")
 	private Integer cantidad;
-
+	@Schema(description = "El producto comprado", requiredMode = Schema.RequiredMode.REQUIRED)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "producto_id")
 	@JsonBackReference("producto-comprobante")  // Named to match with Product's managed reference
 	private Producto producto;
 
+	@Schema(description = "La compra asociada al comprobante", requiredMode = Schema.RequiredMode.REQUIRED)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "compra_id")
 	@JsonBackReference("compra-comprobante")  // Named to match with Compra's managed reference
 	private Compra compra;
-
+	@Schema(description = "El precio del producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "15000.00")
 	@Column(name = "precio")
 	private BigDecimal precio;
 
